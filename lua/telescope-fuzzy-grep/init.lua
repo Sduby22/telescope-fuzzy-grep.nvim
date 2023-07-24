@@ -9,7 +9,6 @@ local M = {}
 local flatten = vim.tbl_flatten
 
 -- split the pattern into words and generate a regex pattern
--- ^(?=.*asdsadsad)(?=.*d)(?=.*asdasd)(?=.*asd)(?=.*as)
 local function gen_regex_pattern(pattern)
 	local words = vim.split(pattern, " ")
 	local words = vim.tbl_filter(function(word)
@@ -17,7 +16,7 @@ local function gen_regex_pattern(pattern)
 	end, words)
 	local regex_pattern = "^"
 	for _, word in ipairs(words) do
-		regex_pattern = regex_pattern .. "(?=.*" .. word .. ")"
+		regex_pattern = regex_pattern .. ".*" .. word
 	end
 	return regex_pattern
 end
@@ -37,14 +36,6 @@ function M.fuzzy_grep(opts)
 		end
 	end
 
-	-- "rg",
-	-- "--color=never",
-	-- "--no-heading",
-	-- "--with-filename",
-	-- "--line-number",
-	-- "--column",
-	-- "--smart-case"
-	-- rg --null --line-buffered --color=never --max-columns=1000 --path-separator / --smart-case --no-heading --with-filename --line-number --search-zip --hidden -g !.git -g !.svn -g !.hg -P -e ^(?=.*asdsadsad)(?=.*d)(?=.*asdasd)(?=.*asd)(?=.*as) .
 	additional_args = additional_args
 		or {
 			"--path-separator",
