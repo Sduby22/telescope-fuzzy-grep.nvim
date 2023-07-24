@@ -1,4 +1,5 @@
 local pickers = require("telescope.pickers")
+local sorters = require("telescope.sorters")
 local actions = require("telescope.actions")
 local make_entry = require("telescope.make_entry")
 local finders = require("telescope.finders")
