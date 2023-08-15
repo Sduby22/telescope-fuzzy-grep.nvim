@@ -47,7 +47,14 @@ function M.fuzzy_grep(opts)
 			"1000",
 		}
 
-	local args = flatten({ vimgrep_arguments, additional_args })
+	local search_dirs = opts.search_dirs
+	if search_dirs then
+		for i, path in ipairs(search_dirs) do
+			search_dirs[i] = vim.fn.expand(path)
+		end
+	end
+
+	local args = flatten({ vimgrep_arguments, additional_args, search_dirs })
 
 	local live_grepper = finders.new_job(function(prompt)
 		if not prompt or prompt == "" then
